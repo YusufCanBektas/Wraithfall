@@ -6,16 +6,17 @@ namespace schmup
     [RequireComponent(typeof(PlayerInput))]
     public class InputReader : MonoBehaviour
     {
-        // Sei dir sicher, dass du die Player input komponente bei c# events einsetzt
-         PlayerInput playerInput;
-         InputAction moveAction;
+        PlayerInput playerInput;
+        InputAction moveAction;
+        InputAction boostAction;
 
-         public Vector2 Move => moveAction.ReadValue<Vector2>();
+        public Vector2 Move => moveAction.ReadValue<Vector2>();
+        public bool Boost => boostAction.IsPressed();
 
-         void Start() {
-             playerInput = GetComponent<PlayerInput>();
-             moveAction = playerInput.actions["Move"];
-         }
+        void Start() {
+            playerInput = GetComponent<PlayerInput>();
+            moveAction = playerInput.actions["Move"];
+            boostAction = playerInput.actions["Boost"];
+        }
     }
 }
-
