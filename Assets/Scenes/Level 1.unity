@@ -355,7 +355,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: e785d579571dbc6409fe948938f5569e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1290010777}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e785d579571dbc6409fe948938f5569e, type: 3}
 --- !u!1 &330585543
@@ -878,6 +881,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e785d579571dbc6409fe948938f5569e, type: 3}
   m_PrefabInstance: {fileID: 278365193}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1290010776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1290010777}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1290010777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290010776}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 945548608}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1355211638
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,6 +924,7 @@ GameObject:
   - component: {fileID: 1355211640}
   - component: {fileID: 1355211642}
   - component: {fileID: 1355211641}
+  - component: {fileID: 1355211643}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -906,7 +941,7 @@ Transform:
   m_GameObject: {fileID: 1355211638}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.46, y: -0.69, z: 0}
+  m_LocalPosition: {x: -12.46, y: -0.69, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -961,7 +996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
   m_Actions: {fileID: -944628639613478452, guid: 41d6e5dfbc5e4cf4189bb67b4ed15180, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -972,12 +1007,39 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ae074dd6-8456-4da2-b6f4-67a318f69b6f
+    m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bfbe3998-d2a9-427e-a2fa-2d71cbfa720a
+    m_ActionName: 'Player/Boost[/Keyboard/leftShift]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2418c4e8-8c2c-4ac4-b653-b3404462b2ac
+    m_ActionName: 'Player/shoot[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1355211643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355211638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 557ef9f301e6709499a95ea255dee894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::schmup.PlayerShooter
+  bulletPrefab: {fileID: 1957738359388730577, guid: 1099bba5af7b75c47a45e943b8359ab4, type: 3}
+  firePoint: {fileID: 1290010777}
+  fireRate: 0.2
 --- !u!1 &1739197098
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,6 +1050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1739197100}
   - component: {fileID: 1739197099}
+  - component: {fileID: 1739197101}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -1038,6 +1101,20 @@ Transform:
   - {fileID: 86647126}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1739197101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739197098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cdf47dc5d9fa14419e9af46d9312a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::schmup.BackgroundLooper
+  cam: {fileID: 330585546}
+  backgroundWidth: 43
 --- !u!1 &1750340220
 GameObject:
   m_ObjectHideFlags: 0
