@@ -15,5 +15,16 @@ namespace schmup {
         {
             transform.position += Vector3.right * (speed * Time.deltaTime);
         }
+
+        void OnTriggerEnter(Collider other)
+        {
+            Debug.Log($"Bullet trifft: {other.name}");
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(1);
+                Destroy(gameObject);
+            }
+        }
     }
 }
