@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 5179787459554985149}
   - component: {fileID: 6717922473641153220}
   - component: {fileID: 6350997374434416739}
+  - component: {fileID: -6712539964997272927}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -165,3 +166,30 @@ MonoBehaviour:
   firePoint: {fileID: 4052999644148296663}
   fireRate: 2
   health: 3
+--- !u!54 &-6712539964997272927
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6201741393981669627}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
