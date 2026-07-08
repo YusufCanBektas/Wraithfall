@@ -4,7 +4,7 @@ namespace schmup {
     public class BackgroundLooper : MonoBehaviour
     {
         [SerializeField] Transform cam;
-        [SerializeField] float backgroundWidth = 43f;
+        [SerializeField] float backgroundWidth = 28f;
 
         GameObject copyB;
         bool initialized = false;
@@ -22,14 +22,13 @@ namespace schmup {
         {
             if (!initialized) return;
 
-            // Wenn Original links aus dem Bild
-            if (transform.position.x < cam.position.x - backgroundWidth)
+            // Früher repositionieren: sobald der Hintergrund halb durch ist
+            if (transform.position.x < cam.position.x - backgroundWidth * 0.5f)
             {
                 transform.position = new Vector3(copyB.transform.position.x + backgroundWidth, transform.position.y, transform.position.z);
             }
 
-            // Wenn Kopie links aus dem Bild
-            if (copyB.transform.position.x < cam.position.x - backgroundWidth)
+            if (copyB.transform.position.x < cam.position.x - backgroundWidth * 0.5f)
             {
                 copyB.transform.position = new Vector3(transform.position.x + backgroundWidth, copyB.transform.position.y, copyB.transform.position.z);
             }

@@ -18,6 +18,10 @@ namespace schmup {
         [SerializeField] Wave[] waves;
         [SerializeField] float timeBetweenWaves = 5f;
 
+        [Header("Spawn Position Variation")]
+        [SerializeField] float minSpawnY = -3f;
+        [SerializeField] float maxSpawnY = 3f;
+
         int currentWave = 0;
         int enemiesSpawned = 0;
         float nextSpawnTime = 0f;
@@ -54,7 +58,11 @@ namespace schmup {
 
         void SpawnEnemy(Wave wave)
         {
-            GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+            // Zufällige Y-Position innerhalb des Bereichs
+            float randomY = Random.Range(minSpawnY, maxSpawnY);
+            Vector3 spawnPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y + randomY, spawnPoint.position.z);
+
+            GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
             Enemy e = enemy.GetComponent<Enemy>();
             // Wellen-spezifische Werte setzen
         }
