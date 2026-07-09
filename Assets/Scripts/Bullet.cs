@@ -19,10 +19,19 @@ namespace schmup {
         void OnTriggerEnter(Collider other)
         {
             Debug.Log($"Bullet trifft: {other.name}");
+
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
                 enemy.TakeDamage(1);
+                Destroy(gameObject);
+                return;
+            }
+
+            BossController boss = other.GetComponent<BossController>();
+            if (boss != null)
+            {
+                boss.TakeDamage(1);
                 Destroy(gameObject);
             }
         }
