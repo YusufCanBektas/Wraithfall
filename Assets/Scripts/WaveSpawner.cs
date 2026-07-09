@@ -22,11 +22,17 @@ namespace schmup {
         [SerializeField] float minSpawnY = -3f;
         [SerializeField] float maxSpawnY = 3f;
 
+        [Header("Boss")]
+        [SerializeField] GameObject bossPrefab;
+        [SerializeField] Vector3 bossSpawnOffset = new Vector3(12f, 0f, 0f);
+        [SerializeField] float delayBeforeBoss = 3f;
+
         int currentWave = 0;
         int enemiesSpawned = 0;
         float nextSpawnTime = 0f;
         bool waveComplete = false;
         bool allWavesDone = false;
+        bool bossSpawned = false;
 
         void Update()
         {
@@ -35,6 +41,7 @@ namespace schmup {
             {
                 allWavesDone = true;
                 Debug.Log("Alle Wellen fertig → Boss!");
+                Invoke(nameof(SpawnBoss), delayBeforeBoss);
                 return;
             }
 
@@ -65,6 +72,16 @@ namespace schmup {
             GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
             Enemy e = enemy.GetComponent<Enemy>();
             // Wellen-spezifische Werte setzen
+        }
+
+        void SpawnBoss()
+        {
+            if (bossSpawned || bossPrefab == null) return;
+            bossSpawned = true;
+
+            Vector3 spawnPos = Camera.main.transform.position + bossSpawnOffset;
+            Instantiate(bossPrefab, spawnPos, Quaternion.identity);
+            Debug.Log("Boss ist erschienen!");
         }
 
         void NextWave()
