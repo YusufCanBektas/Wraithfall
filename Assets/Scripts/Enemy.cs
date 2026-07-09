@@ -15,6 +15,8 @@ namespace schmup
 
         [Header("Leben")] [SerializeField] int health = 3;
 
+        [Header("Despawn")] [SerializeField] float despawnOffsetX = 15f;
+
         float startY;
         float nextFireTime;
 
@@ -44,8 +46,8 @@ namespace schmup
                 }
             }
 
-            // Aus dem Bild → zerstören
-            if (transform.position.x < -25f)
+            // Aus dem Bild → zerstören (jetzt kameraabhängig, nicht mehr fester Wert)
+            if (transform.position.x < Camera.main.transform.position.x - despawnOffsetX)
             {
                 Destroy(gameObject);
             }
