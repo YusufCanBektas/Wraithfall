@@ -332,6 +332,9 @@ MonoBehaviour:
   timeBetweenWaves: 5
   minSpawnY: -3
   maxSpawnY: 3
+  bossPrefab: {fileID: 7053841495093307213, guid: a69cb8a21fcfd9b46933aa55442b15f8, type: 3}
+  bossSpawnOffset: {x: 12, y: 0, z: 0}
+  delayBeforeBoss: 3
 --- !u!4 &379024742
 Transform:
   m_ObjectHideFlags: 0
@@ -686,6 +689,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1155459335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1155459336}
+  m_Layer: 0
+  m_Name: BossSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1155459336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155459335}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.76, y: -0.31, z: -1.55}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1337068262 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 430ad3e94e5e9364781cb790fa40dcd1, type: 3}
@@ -887,7 +921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23451a13034be34999f84d99b8a8c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  maxHealth: 3
+  maxHealth: 1000
 --- !u!1 &1406855753
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,8 +962,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1739197100}
-  - component: {fileID: 1739197099}
-  - component: {fileID: 1739197101}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -937,21 +969,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1739197099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1739197098}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a1218ad27bb4c22879844ef629167c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::schmup.ParallaxController
-  backgrounds:
-  - {fileID: 0}
-  scrollSpeeds: []
 --- !u!4 &1739197100
 Transform:
   m_ObjectHideFlags: 0
@@ -968,20 +985,6 @@ Transform:
   - {fileID: 595397596}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1739197101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1739197098}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cdf47dc5d9fa14419e9af46d9312a2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::schmup.BackgroundLooper
-  cam: {fileID: 330585546}
-  backgroundWidth: 15
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -991,3 +994,4 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1355211639}
+  - {fileID: 1155459336}
