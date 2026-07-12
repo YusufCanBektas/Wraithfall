@@ -19,6 +19,7 @@ namespace schmup {
                 nextFireTime = Time.time + fireRate;
                 Vector3 spawnPos = new Vector3(firePoint.position.x, firePoint.position.y, -5f);
                 Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+                AudioManager.Instance?.PlayShoot();
             }
         }
     }
