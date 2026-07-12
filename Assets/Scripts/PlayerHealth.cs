@@ -13,6 +13,8 @@ namespace schmup {
 
         void OnTriggerEnter(Collider other)
         {
+            Debug.Log($"Player getroffen von: {other.name} (Tag: {other.tag})");
+
             // EnemyBullet trifft Spieler
             if (other.CompareTag("EnemyBullet"))
             {
@@ -35,7 +37,7 @@ namespace schmup {
             if (currentHealth <= 0)
             {
                 Debug.Log("Game Over!");
-                gameObject.SetActive(false); // Spieler verschwindet
+                gameObject.SetActive(false);
             }
         }
 
