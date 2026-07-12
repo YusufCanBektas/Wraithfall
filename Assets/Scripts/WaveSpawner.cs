@@ -1,21 +1,11 @@
 using UnityEngine;
 
 namespace schmup {
-    [System.Serializable]
-    public class Wave
-    {
-        public int enemyCount;
-        public float spawnInterval;
-        public float enemySpeed;
-        public float enemyFireRate;
-        public bool useSineWave;
-    }
-
     public class WaveSpawner : MonoBehaviour
     {
         [SerializeField] GameObject enemyPrefab;
         [SerializeField] Transform spawnPoint;
-        [SerializeField] Wave[] waves;
+        [SerializeField] WaveData[] waves;
         [SerializeField] float timeBetweenWaves = 5f;
 
         [Header("Spawn Position Variation")]
@@ -34,6 +24,11 @@ namespace schmup {
         bool allWavesDone = false;
         bool bossSpawned = false;
 
+        void Start()
+        {
+            AudioManager.Instance?.PlayLevelMusic();
+        }
+
         void Update()
         {
             if (allWavesDone) return;
@@ -45,7 +40,7 @@ namespace schmup {
                 return;
             }
 
-            Wave wave = waves[currentWave];
+            WaveData wave = waves[currentWave];
 
             if (enemiesSpawned < wave.enemyCount)
             {
@@ -63,15 +58,16 @@ namespace schmup {
             }
         }
 
-        void SpawnEnemy(Wave wave)
+        void SpawnEnemy(WaveData wave)
         {
             // Zufällige Y-Position innerhalb des Bereichs
             float randomY = Random.Range(minSpawnY, maxSpawnY);
             Vector3 spawnPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y + randomY, spawnPoint.position.z);
 
-            GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-            Enemy e = enemy.GetComponent<Enemy>();
-            // Wellen-spezifische Werte setzen
+            GameObject enemyObj = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+            Enemy enemy = enemyObj.GetComponent<Enemy>();
+            // Wellen-spezifische Werte aus dem WaveData-Asset könnten hier gesetzt werden,
+            // z.B. über public setter methoden auf Enemy, falls gewünscht
         }
 
         void SpawnBoss()
