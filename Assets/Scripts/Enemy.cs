@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace schmup
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : Damageable
     {
         [Header("Bewegung")] [SerializeField] float moveSpeed = 3f;
         [SerializeField] bool useSineWave = false;
@@ -13,14 +13,14 @@ namespace schmup
         [SerializeField] Transform firePoint;
         [SerializeField] float fireRate = 2f;
 
-        [Header("Leben")] [SerializeField] int health = 3;
-
         [Header("Despawn")] [SerializeField] float despawnOffsetX = 15f;
 
         float startY;
         float nextFireTime;
 
-        void Start() {
+        protected override void Start()
+        {
+            base.Start();
             startY = transform.position.y;
             nextFireTime = Time.time + Random.Range(0.5f, fireRate);
         }
@@ -39,24 +39,18 @@ namespace schmup
             // Nur schießen wenn im Sichtbereich der Kamera
             if (transform.position.x < Camera.main.transform.position.x + 12f)
             {
-                if (Time.time >= nextFireTime && bulletPrefab != null)
+                if (Time.time >= nextFireTime && bulletPrefab != null && firePoint != null)
                 {
                     nextFireTime = Time.time + fireRate;
                     Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
                 }
             }
 
-            // Aus dem Bild → zerstören (jetzt kameraabhängig, nicht mehr fester Wert)
+            // Aus dem Bild → zerstören (kameraabhängig)
             if (transform.position.x < Camera.main.transform.position.x - despawnOffsetX)
             {
                 Destroy(gameObject);
             }
-        }
-        public void TakeDamage(int damage)
-        {
-            health -= damage;
-            if (health <= 0)
-                Destroy(gameObject);
         }
     }
 }

@@ -3,12 +3,14 @@ using UnityEngine;
 namespace schmup {
     public class PlayerHealth : MonoBehaviour
     {
-        [SerializeField] int maxHealth = 3;
+        [SerializeField] int maxHealth = 5;
+        [SerializeField] HealthUI healthUI;
         int currentHealth;
 
         void Start()
         {
             currentHealth = maxHealth;
+            healthUI?.UpdateDisplay(currentHealth);
         }
 
         void OnTriggerEnter(Collider other)
@@ -34,10 +36,14 @@ namespace schmup {
             currentHealth -= damage;
             Debug.Log($"Leben: {currentHealth}");
 
+            AudioManager.Instance?.PlayHit();
+            healthUI?.UpdateDisplay(currentHealth);
+
             if (currentHealth <= 0)
             {
                 Debug.Log("Game Over!");
                 gameObject.SetActive(false);
+                GameManager.Instance?.OnPlayerDied();
             }
         }
 

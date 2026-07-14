@@ -20,18 +20,10 @@ namespace schmup {
         {
             Debug.Log($"Bullet trifft: {other.name}");
 
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
+            Damageable target = other.GetComponent<Damageable>();
+            if (target != null)
             {
-                enemy.TakeDamage(1);
-                Destroy(gameObject);
-                return;
-            }
-
-            BossController boss = other.GetComponent<BossController>();
-            if (boss != null)
-            {
-                boss.TakeDamage(1);
+                target.TakeDamage(1);
                 Destroy(gameObject);
             }
         }

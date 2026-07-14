@@ -2,10 +2,13 @@ using UnityEngine;
 
 namespace schmup
 {
-    public class BossController : MonoBehaviour
+    public class BossController : Damageable
     {
         [Header("Position")]
         [SerializeField] Vector3 offsetFromCamera = new Vector3(6f, 0f, 0f);
+
+        [Header("Ausrichtung (per Ausprobieren in der Game-View gefunden)")]
+        [SerializeField] Vector3 modelRotation = new Vector3(-90f, 0f, 0f); // TODO: hier deinen gefundenen Wert eintragen
 
         [Header("Patrouille (nur vertikal)")]
         [SerializeField] float patrolSpeed = 2f;
@@ -15,20 +18,20 @@ namespace schmup
         [SerializeField] GameObject bulletPrefab;
         [SerializeField] Transform firePoint;
         [SerializeField] float fireRate = 1.5f;
-
-        [Header("Leben")]
-        [SerializeField] int maxHealth = 30;
-        int currentHealth;
+        [SerializeField] Vector3 firePointLocalOffset = new Vector3(-1f, 0f, 0f);
 
         float baseY;
+        float startY;
         float nextFireTime;
         int direction = 1;
 
-        void Start()
+        protected override void Start()
         {
-            currentHealth = maxHealth;
+            base.Start();
             baseY = transform.position.y;
+            startY = baseY;
             nextFireTime = Time.time + 1f;
+            transform.rotation = Quaternion.Euler(modelRotation);
         }
 
         void Update()
@@ -36,9 +39,9 @@ namespace schmup
             float targetX = Camera.main.transform.position.x + offsetFromCamera.x;
 
             baseY += direction * patrolSpeed * Time.deltaTime;
-            if (baseY > offsetFromCamera.y + patrolRangeY)
+            if (baseY > startY + patrolRangeY)
                 direction = -1;
-            else if (baseY < offsetFromCamera.y - patrolRangeY)
+            else if (baseY < startY - patrolRangeY)
                 direction = 1;
 
             transform.position = new Vector3(targetX, baseY, offsetFromCamera.z);
@@ -46,21 +49,25 @@ namespace schmup
             if (Time.time >= nextFireTime && bulletPrefab != null)
             {
                 nextFireTime = Time.time + fireRate;
-                Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+                // Spawn-Position wird direkt vom Boss-Transform berechnet (fester Offset),
+                // statt firePoint.position blind zu übernehmen. Das macht den Spawn unabhängig
+                // von einer eventuell schräg-rotierten Parent-Hierarchie.
+                Vector3 spawnPos = transform.position + firePointLocalOffset;
+                spawnPos.z = -5f;
+                Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+                Debug.Log($"Boss schießt von Position: {spawnPos}");
             }
         }
 
-        public void TakeDamage(int damage)
+        protected override void Die()
         {
-            currentHealth -= damage;
-
-            if (currentHealth <= 0)
-            {
-                Debug.Log("Boss besiegt! Sieg!");
-                Destroy(gameObject);
-            }
+            Debug.Log("Boss besiegt! Sieg!");
+            AudioManager.Instance?.PlayExplosion();
+            AudioManager.Instance?.PlayBossDefeated();
+            GameManager.Instance?.OnBossDefeated();
+            Destroy(gameObject);
         }
-        
+
         void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("PlayerBullet"))
@@ -69,8 +76,5 @@ namespace schmup
                 Destroy(other.gameObject);
             }
         }
-
-        public int GetHealth() => currentHealth;
-        public int GetMaxHealth() => maxHealth;
     }
 }

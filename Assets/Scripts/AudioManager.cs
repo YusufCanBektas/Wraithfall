@@ -29,6 +29,16 @@ namespace schmup
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            float savedVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
+            SetVolume(savedVolume);
+        }
+
+        public void SetVolume(float value)
+        {
+            if (musicSource != null) musicSource.volume = value;
+            if (sfxSource != null) sfxSource.volume = value;
+            PlayerPrefs.SetFloat("MasterVolume", value);
         }
 
         public void PlayMenuMusic() => PlayMusic(menuMusic);
