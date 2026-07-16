@@ -17,6 +17,9 @@ namespace schmup {
         [SerializeField] Vector3 bossSpawnOffset = new Vector3(12f, 0f, 0f);
         [SerializeField] float delayBeforeBoss = 3f;
 
+        [Header("Item-Drops")]
+        [SerializeField] int itemDropsStartFromWave = 1; // 1 = ab erster Welle, 2 = ab zweiter Welle, usw.
+
         int currentWave = 0;
         int enemiesSpawned = 0;
         float nextSpawnTime = 0f;
@@ -26,7 +29,7 @@ namespace schmup {
 
         void Start()
         {
-            AudioManager.Instance?.PlayLevelMusic();
+            AudioManager.Instance?.RestartLevelMusic();
         }
 
         void Update()
@@ -66,8 +69,10 @@ namespace schmup {
 
             GameObject enemyObj = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
             Enemy enemy = enemyObj.GetComponent<Enemy>();
-            // Wellen-spezifische Werte aus dem WaveData-Asset könnten hier gesetzt werden,
-            // z.B. über public setter methoden auf Enemy, falls gewünscht
+
+            // Wellenzählung ist 0-basiert intern (currentWave), aber "Welle 1" für den Menschen ist currentWave == 0
+            bool dropsAllowed = (currentWave + 1) >= itemDropsStartFromWave;
+            enemy?.SetItemDropsEnabled(dropsAllowed);
         }
 
         void SpawnBoss()
@@ -87,5 +92,7 @@ namespace schmup {
             waveComplete = false;
             Debug.Log($"Welle {currentWave + 1} startet!");
         }
+
+        public int GetCurrentWaveNumber() => currentWave + 1; // 1-basiert für Menschen
     }
 }
