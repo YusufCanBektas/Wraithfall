@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 namespace schmup
 {
@@ -10,6 +11,10 @@ namespace schmup
         [Header("UI Panels")]
         [SerializeField] GameObject gameOverPanel;
         [SerializeField] GameObject winPanel;
+
+        [Header("Score-Anzeige auf den Panels")]
+        [SerializeField] TextMeshProUGUI gameOverScoreText;
+        [SerializeField] TextMeshProUGUI winScoreText;
 
         bool gameEnded = false;
 
@@ -31,6 +36,8 @@ namespace schmup
             Debug.Log("Game Over!");
             Time.timeScale = 0f;
 
+            ShowFinalScore(gameOverScoreText);
+
             if (gameOverPanel != null)
                 gameOverPanel.SetActive(true);
         }
@@ -43,8 +50,26 @@ namespace schmup
             Debug.Log("Sieg!");
             Time.timeScale = 0f;
 
+            ShowFinalScore(winScoreText);
+
             if (winPanel != null)
                 winPanel.SetActive(true);
+        }
+
+        void ShowFinalScore(TextMeshProUGUI scoreText)
+        {
+            if (ScoreManager.Instance == null) return;
+
+            int finalScore = ScoreManager.Instance.GetScore();
+            bool isNewHighscore = ScoreManager.Instance.CheckAndSaveHighscore();
+            int highscore = ScoreManager.Instance.GetHighscore();
+
+            if (scoreText != null)
+            {
+                scoreText.text = isNewHighscore
+                    ? $"Punkte: {finalScore}\nNeuer Highscore!"
+                    : $"Punkte: {finalScore}\nHighscore: {highscore}";
+            }
         }
 
         public void RetryLevel()

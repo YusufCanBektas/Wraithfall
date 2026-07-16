@@ -18,6 +18,7 @@ namespace schmup
         [SerializeField] AudioClip explosionSfx;
         [SerializeField] AudioClip bossDefeatedSfx;
         [SerializeField] AudioClip buttonClickSfx;
+        [SerializeField] AudioClip itemPickupSfx;
 
         void Awake()
         {
@@ -44,10 +45,13 @@ namespace schmup
         public void PlayMenuMusic() => PlayMusic(menuMusic);
         public void PlayLevelMusic() => PlayMusic(levelMusic);
 
-        void PlayMusic(AudioClip clip)
+        // Startet die Level-Musik garantiert von vorne (z.B. bei Retry)
+        public void RestartLevelMusic() => PlayMusic(levelMusic, forceRestart: true);
+
+        void PlayMusic(AudioClip clip, bool forceRestart = false)
         {
             if (clip == null || musicSource == null) return;
-            if (musicSource.clip == clip && musicSource.isPlaying) return;
+            if (!forceRestart && musicSource.clip == clip && musicSource.isPlaying) return;
 
             musicSource.clip = clip;
             musicSource.loop = true;
@@ -59,6 +63,7 @@ namespace schmup
         public void PlayExplosion() => PlaySfx(explosionSfx);
         public void PlayBossDefeated() => PlaySfx(bossDefeatedSfx);
         public void PlayButtonClick() => PlaySfx(buttonClickSfx);
+        public void PlayItemPickup() => PlaySfx(itemPickupSfx);
 
         void PlaySfx(AudioClip clip)
         {

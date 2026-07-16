@@ -15,6 +15,14 @@ namespace schmup
 
         [Header("Despawn")] [SerializeField] float despawnOffsetX = 15f;
 
+        [Header("Item-Drop")]
+        [SerializeField] GameObject[] itemPrefabs; // z.B. Points, ExtraLife, Shield, WeaponUpgrade
+        [SerializeField] float dropChance = 0.5f;
+        bool itemDropsEnabled = true; // wird vom WaveSpawner gesetzt (ab welcher Welle Drops erlaubt sind)
+
+        [Header("Punkte")]
+        [SerializeField] int killScoreValue = 50;
+
         float startY;
         float nextFireTime;
 
@@ -51,6 +59,29 @@ namespace schmup
             {
                 Destroy(gameObject);
             }
+        }
+
+        // Wird vom WaveSpawner direkt nach dem Instantiate aufgerufen
+        public void SetItemDropsEnabled(bool enabled)
+        {
+            itemDropsEnabled = enabled;
+        }
+
+        protected override void Die()
+        {
+            ScoreManager.Instance?.AddPoints(killScoreValue);
+            TryDropItem();
+            base.Die();
+        }
+
+        void TryDropItem()
+        {
+            if (!itemDropsEnabled) return;
+            if (itemPrefabs == null || itemPrefabs.Length == 0) return;
+            if (Random.value > dropChance) return;
+
+            GameObject chosenItem = itemPrefabs[Random.Range(0, itemPrefabs.Length)];
+            Instantiate(chosenItem, transform.position, Quaternion.identity);
         }
     }
 }

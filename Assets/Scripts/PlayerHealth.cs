@@ -5,7 +5,12 @@ namespace schmup {
     {
         [SerializeField] int maxHealth = 5;
         [SerializeField] HealthUI healthUI;
+        [SerializeField] PowerUpIndicator powerUpIndicator;
         int currentHealth;
+
+        [Header("Schild")]
+        [SerializeField] float shieldDuration = 5f;
+        bool shieldActive = false;
 
         void Start()
         {
@@ -33,6 +38,12 @@ namespace schmup {
 
         void TakeDamage(int damage)
         {
+            if (shieldActive)
+            {
+                Debug.Log("Schild blockiert Schaden!");
+                return;
+            }
+
             currentHealth -= damage;
             Debug.Log($"Leben: {currentHealth}");
 
@@ -45,6 +56,29 @@ namespace schmup {
                 gameObject.SetActive(false);
                 GameManager.Instance?.OnPlayerDied();
             }
+        }
+
+        public void AddLife(int amount)
+        {
+            currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+            healthUI?.UpdateDisplay(currentHealth);
+            Debug.Log($"Extra-Leben! Leben: {currentHealth}");
+        }
+
+        public void ActivateShield()
+        {
+            if (shieldActive) return;
+            StartCoroutine(ShieldRoutine());
+        }
+
+        System.Collections.IEnumerator ShieldRoutine()
+        {
+            shieldActive = true;
+            Debug.Log("Schild aktiviert!");
+            powerUpIndicator?.ShowShield(shieldDuration);
+            yield return new WaitForSeconds(shieldDuration);
+            shieldActive = false;
+            Debug.Log("Schild abgelaufen.");
         }
 
         public int GetHealth() => currentHealth;

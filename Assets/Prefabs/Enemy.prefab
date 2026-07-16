@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb379527f3cb7004ca3a0d28a9c6615f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::schmup.Enemy
+  maxHealth: 3
   moveSpeed: 3
   useSineWave: 0
   sineAmplitude: 1
@@ -166,7 +167,13 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6222718863518740505, guid: 9b2d4c0ad6cf08e4580e3ad0a62c1939, type: 3}
   firePoint: {fileID: 4052999644148296663}
   fireRate: 2
-  health: 3
+  despawnOffsetX: 15
+  itemPrefabs:
+  - {fileID: 958787680962339806, guid: db1ba7e989d830948b5564bfa30183f6, type: 3}
+  - {fileID: 6850257452021626686, guid: 1907fa43bb6af424b835d7cad69ada2f, type: 3}
+  - {fileID: 748099323482845212, guid: 6e850ce2e54185c43847dcc98cb17219, type: 3}
+  - {fileID: 919132149155446097, guid: 34b13394a6d3d514ea7b42041e4ace2c, type: 3}
+  dropChance: 0.25
 --- !u!54 &-6712539964997272927
 Rigidbody:
   m_ObjectHideFlags: 0

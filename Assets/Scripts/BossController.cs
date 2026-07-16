@@ -20,10 +20,14 @@ namespace schmup
         [SerializeField] float fireRate = 1.5f;
         [SerializeField] Vector3 firePointLocalOffset = new Vector3(-1f, 0f, 0f);
 
+        [Header("Punkte")]
+        [SerializeField] int defeatScoreValue = 1000;
+
         float baseY;
         float startY;
         float nextFireTime;
         int direction = 1;
+        HUDController hud;
 
         protected override void Start()
         {
@@ -32,6 +36,9 @@ namespace schmup
             startY = baseY;
             nextFireTime = Time.time + 1f;
             transform.rotation = Quaternion.Euler(modelRotation);
+
+            hud = FindFirstObjectByType<HUDController>();
+            hud?.ShowBossHealthBar(this);
         }
 
         void Update()
@@ -59,11 +66,19 @@ namespace schmup
             }
         }
 
+        public override void TakeDamage(int damage)
+        {
+            base.TakeDamage(damage);
+            hud?.UpdateBossHealth(this);
+        }
+
         protected override void Die()
         {
             Debug.Log("Boss besiegt! Sieg!");
+            ScoreManager.Instance?.AddPoints(defeatScoreValue);
             AudioManager.Instance?.PlayExplosion();
             AudioManager.Instance?.PlayBossDefeated();
+            hud?.HideBossHealthBar();
             GameManager.Instance?.OnBossDefeated();
             Destroy(gameObject);
         }
