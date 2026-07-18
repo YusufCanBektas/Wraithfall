@@ -16,4 +16,4 @@ MonoBehaviour:
   spawnInterval: 1.5
   enemySpeed: 3
   enemyFireRate: 0.6
-  useSineWave: 0
+  useSineWave: 1

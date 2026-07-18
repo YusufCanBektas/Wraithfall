@@ -67,6 +67,13 @@ namespace schmup
             itemDropsEnabled = enabled;
         }
 
+        // Wird vom WaveSpawner gesetzt, um wellen-spezifisches Bewegungsmuster zu erlauben
+        public void SetMovementPattern(bool sineWave, float speed)
+        {
+            useSineWave = sineWave;
+            moveSpeed = speed;
+        }
+
         protected override void Die()
         {
             ScoreManager.Instance?.AddPoints(killScoreValue);

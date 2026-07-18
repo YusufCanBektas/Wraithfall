@@ -73,6 +73,9 @@ namespace schmup {
             // Wellenzählung ist 0-basiert intern (currentWave), aber "Welle 1" für den Menschen ist currentWave == 0
             bool dropsAllowed = (currentWave + 1) >= itemDropsStartFromWave;
             enemy?.SetItemDropsEnabled(dropsAllowed);
+
+            // Bewegungsmuster aus dem WaveData-Asset übernehmen (z.B. Sinuswelle ab bestimmter Welle)
+            enemy?.SetMovementPattern(wave.useSineWave, wave.enemySpeed > 0 ? wave.enemySpeed : 3f);
         }
 
         void SpawnBoss()

@@ -12,7 +12,7 @@ namespace schmup {
         [SerializeField] GameObject model;
 
         [Header("Camera Bounds")]
-        [SerializeField] Transform CameraController;
+        [SerializeField] Transform cameraTransform;
         [SerializeField] float minX = -8f;
         [SerializeField] float maxX = 8f;
         [SerializeField] float minY = -4f;
@@ -38,10 +38,10 @@ namespace schmup {
             _targetPosition += moveInput * (currentSpeed * Time.deltaTime);
 
             // Camera Bounds
-            var minPlayerX = CameraController.position.x + minX;
-            var maxPlayerX = CameraController.position.x + maxX;
-            var minPlayerY = CameraController.position.y + minY;
-            var maxPlayerY = CameraController.position.y + maxY;
+            var minPlayerX = cameraTransform.position.x + minX;
+            var maxPlayerX = cameraTransform.position.x + maxX;
+            var minPlayerY = cameraTransform.position.y + minY;
+            var maxPlayerY = cameraTransform.position.y + maxY;
 
             _targetPosition.x = Mathf.Clamp(_targetPosition.x, minPlayerX, maxPlayerX);
             _targetPosition.y = Mathf.Clamp(_targetPosition.y, minPlayerY, maxPlayerY);
