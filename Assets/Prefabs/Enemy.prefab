@@ -172,9 +172,10 @@ MonoBehaviour:
   - {fileID: 958787680962339806, guid: db1ba7e989d830948b5564bfa30183f6, type: 3}
   - {fileID: 6850257452021626686, guid: 1907fa43bb6af424b835d7cad69ada2f, type: 3}
   - {fileID: 748099323482845212, guid: 6e850ce2e54185c43847dcc98cb17219, type: 3}
-  - {fileID: 919132149155446097, guid: 34b13394a6d3d514ea7b42041e4ace2c, type: 3}
+  - {fileID: 6850257452021626686, guid: 3d0f94895310f1e44912799d428fa40f, type: 3}
   dropChance: 0.25
   killScoreValue: 50
+  explosionPrefab: {fileID: 0}
 --- !u!54 &-6712539964997272927
 Rigidbody:
   m_ObjectHideFlags: 0

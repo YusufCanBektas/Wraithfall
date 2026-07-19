@@ -161,14 +161,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 417ca5692c3a7d345af8652e7e1e0743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::schmup.BossController
-  maxHealth: 30
+  maxHealth: 60
   offsetFromCamera: {x: 6, y: 0, z: -5}
+  modelRotation: {x: -90, y: 0, z: 0}
   patrolSpeed: 2
   patrolRangeY: 3
   bulletPrefab: {fileID: 6222718863518740505, guid: 9b2d4c0ad6cf08e4580e3ad0a62c1939, type: 3}
   firePoint: {fileID: 6241356845037002749, guid: e74b52e26f3a9634db560b8184cc3796, type: 3}
   fireRate: 1.5
   firePointLocalOffset: {x: -1, y: 0, z: 0}
+  defeatScoreValue: 1000
+  explosionPrefab: {fileID: 7172597926073789395, guid: 112cb120075c42f44b52007eb6ed09ac, type: 3}
+  explosionScale: 2.5
 --- !u!54 &7555561519507322070
 Rigidbody:
   m_ObjectHideFlags: 0

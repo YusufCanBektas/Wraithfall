@@ -23,6 +23,9 @@ namespace schmup
         [Header("Punkte")]
         [SerializeField] int killScoreValue = 50;
 
+        [Header("Effekte")]
+        [SerializeField] GameObject explosionPrefab;
+
         float startY;
         float nextFireTime;
 
@@ -78,7 +81,14 @@ namespace schmup
         {
             ScoreManager.Instance?.AddPoints(killScoreValue);
             TryDropItem();
+            SpawnExplosion();
             base.Die();
+        }
+
+        void SpawnExplosion()
+        {
+            if (explosionPrefab != null)
+                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         }
 
         void TryDropItem()

@@ -40,7 +40,15 @@ namespace schmup
             Destroy(gameObject, lifetime);
 
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null) player = playerObj.transform;
+            if (playerObj != null)
+            {
+                player = playerObj.transform;
+                Debug.Log($"Item ({itemType}): Player gefunden - {playerObj.name}");
+            }
+            else
+            {
+                Debug.Log($"Item ({itemType}): KEIN Player mit Tag 'Player' gefunden!");
+            }
         }
 
         IEnumerator PopIn()
@@ -75,6 +83,7 @@ namespace schmup
 
         void OnTriggerEnter(Collider other)
         {
+            Debug.Log($"Item ({itemType}) OnTriggerEnter mit: {other.name} (Tag: {other.tag})");
             if (!other.CompareTag("Player")) return;
 
             switch (itemType)

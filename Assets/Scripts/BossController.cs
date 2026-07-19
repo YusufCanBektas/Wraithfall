@@ -23,6 +23,13 @@ namespace schmup
         [Header("Punkte")]
         [SerializeField] int defeatScoreValue = 1000;
 
+        [Header("Effekte")]
+        [SerializeField] GameObject explosionPrefab;
+        [SerializeField] float explosionScale = 2.5f; // Boss-Explosion größer als bei normalen Gegnern
+
+        [Header("Level-Ende")]
+        [SerializeField] bool isFinalBoss = false; // true beim zweiten Boss in Level 2, löst das eigentliche Spielende aus
+
         float baseY;
         float startY;
         float nextFireTime;
@@ -74,17 +81,31 @@ namespace schmup
 
         protected override void Die()
         {
-            Debug.Log("Boss besiegt! Sieg!");
+            Debug.Log(isFinalBoss ? "Finaler Boss besiegt! Sieg!" : "Boss besiegt! Weiter zu Level 2.");
             ScoreManager.Instance?.AddPoints(defeatScoreValue);
+            SpawnExplosion();
             AudioManager.Instance?.PlayExplosion();
             AudioManager.Instance?.PlayBossDefeated();
             hud?.HideBossHealthBar();
-            GameManager.Instance?.OnBossDefeated();
+
+            if (isFinalBoss)
+                GameManager.Instance?.OnFinalBossDefeated();
+            else
+                GameManager.Instance?.OnBossDefeated();
+
             Destroy(gameObject);
+        }
+
+        void SpawnExplosion()
+        {
+            if (explosionPrefab == null) return;
+            GameObject fx = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            fx.transform.localScale *= explosionScale;
         }
 
         void OnTriggerEnter(Collider other)
         {
+            Debug.Log($"BOSS OnTriggerEnter mit: {other.name} (Tag: {other.tag})");
             if (other.CompareTag("PlayerBullet"))
             {
                 TakeDamage(1);

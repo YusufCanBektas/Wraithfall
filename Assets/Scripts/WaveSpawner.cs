@@ -35,6 +35,8 @@ namespace schmup {
         void Update()
         {
             if (allWavesDone) return;
+            if (GameManager.Instance != null && GameManager.Instance.IsGameEnded()) return;
+
             if (currentWave >= waves.Length)
             {
                 allWavesDone = true;
@@ -81,6 +83,7 @@ namespace schmup {
         void SpawnBoss()
         {
             if (bossSpawned || bossPrefab == null) return;
+            if (GameManager.Instance != null && GameManager.Instance.IsGameEnded()) return;
             bossSpawned = true;
 
             Vector3 spawnPos = Camera.main.transform.position + bossSpawnOffset;

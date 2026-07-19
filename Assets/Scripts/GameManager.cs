@@ -47,6 +47,20 @@ namespace schmup
             if (gameEnded) return;
             gameEnded = true;
 
+            Debug.Log("Erster Boss besiegt! Übergang zu Level 2...");
+
+            if (LevelTransition.Instance != null)
+                LevelTransition.Instance.TransitionToScene("Level 2");
+            else
+                SceneManager.LoadScene("Level 2"); // Fallback ohne Übergangseffekt
+        }
+
+        // Wird vom zweiten Boss (Level 2) aufgerufen, um das eigentliche Spiel-Ende auszulösen
+        public void OnFinalBossDefeated()
+        {
+            if (gameEnded) return;
+            gameEnded = true;
+
             Debug.Log("Sieg!");
             Time.timeScale = 0f;
 
@@ -83,5 +97,7 @@ namespace schmup
             Time.timeScale = 1f;
             SceneManager.LoadScene("MainMenu");
         }
+
+        public bool IsGameEnded() => gameEnded;
     }
 }
