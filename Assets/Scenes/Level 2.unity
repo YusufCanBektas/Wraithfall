@@ -732,7 +732,7 @@ MonoBehaviour:
   timeBetweenWaves: 5
   minSpawnY: -3
   maxSpawnY: 3
-  bossPrefab: {fileID: 6662699234724452378, guid: 9b3a06d5178fb674781594e2aad496a5, type: 3}
+  bossPrefab: {fileID: 7053841495093307213, guid: 626963cf64934b84a8cae7167cb63f67, type: 3}
   bossSpawnOffset: {x: 12, y: 0, z: 0}
   delayBeforeBoss: 3
   itemDropsStartFromWave: 5
