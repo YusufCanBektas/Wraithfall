@@ -736,6 +736,7 @@ MonoBehaviour:
   bossSpawnOffset: {x: 12, y: 0, z: 0}
   delayBeforeBoss: 3
   itemDropsStartFromWave: 5
+  isLevel2: 1
 --- !u!4 &379024742
 Transform:
   m_ObjectHideFlags: 0

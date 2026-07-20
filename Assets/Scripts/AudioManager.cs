@@ -13,6 +13,7 @@ namespace schmup
         [SerializeField] AudioSource musicSource;
         [SerializeField] AudioClip menuMusic;
         [SerializeField] AudioClip levelMusic;
+        [SerializeField] AudioClip level2Music;
 
         [Header("SFX")]
         [SerializeField] AudioSource sfxSource;
@@ -47,9 +48,11 @@ namespace schmup
 
         public void PlayMenuMusic() => PlayMusic(menuMusic);
         public void PlayLevelMusic() => PlayMusic(levelMusic);
+        public void PlayLevel2Music() => PlayMusic(level2Music);
 
         // Startet die Level-Musik garantiert von vorne (z.B. bei Retry)
         public void RestartLevelMusic() => PlayMusic(levelMusic, forceRestart: true);
+        public void RestartLevel2Music() => PlayMusic(level2Music, forceRestart: true);
 
         void PlayMusic(AudioClip clip, bool forceRestart = false)
         {

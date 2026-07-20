@@ -153,13 +153,14 @@ MonoBehaviour:
   musicSource: {fileID: 48220167}
   menuMusic: {fileID: 8300000, guid: d4d329bf2f6f3b14d84de2cb026f95bc, type: 3}
   levelMusic: {fileID: 8300000, guid: 430e74d6b7be19b48bbc628e78bca327, type: 3}
+  level2Music: {fileID: 8300000, guid: fb17da2fa5d7fb74d8ba90613521984b, type: 3}
   sfxSource: {fileID: 48220166}
   shootSfx: {fileID: 8300000, guid: 8ecd01aac7468b942bdfe8d54b4ebe6c, type: 3}
   hitSfx: {fileID: 8300000, guid: 71a8b10e4bf53614ca6cebe852e6dfb9, type: 3}
   explosionSfx: {fileID: 8300000, guid: 318de44a252c4564398c218207682460, type: 3}
   bossDefeatedSfx: {fileID: 8300000, guid: 980b51f6590c766488a8769812f1f678, type: 3}
   buttonClickSfx: {fileID: 8300000, guid: 5befa0c2a99d3c7469a0c927e8bb0d96, type: 3}
-  itemPickupSfx: {fileID: 0}
+  itemPickupSfx: {fileID: 8300000, guid: 921f342be66d38e478db2e17a516d6f5, type: 3}
 --- !u!4 &48220165
 Transform:
   m_ObjectHideFlags: 0

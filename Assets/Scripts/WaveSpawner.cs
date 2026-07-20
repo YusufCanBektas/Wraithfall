@@ -1,6 +1,8 @@
 using UnityEngine;
 
 namespace schmup {
+    // Steuert den Ablauf eines Levels: spawnt Gegnerwellen nacheinander
+    // und lässt nach der letzten Welle den Boss erscheinen.
     public class WaveSpawner : MonoBehaviour
     {
         [SerializeField] GameObject enemyPrefab;
@@ -20,6 +22,9 @@ namespace schmup {
         [Header("Item-Drops")]
         [SerializeField] int itemDropsStartFromWave = 1; // 1 = ab erster Welle, 2 = ab zweiter Welle, usw.
 
+        [Header("Musik")]
+        [SerializeField] bool isLevel2 = false; // bestimmt, welche Level-Musik gestartet wird
+
         int currentWave = 0;
         int enemiesSpawned = 0;
         float nextSpawnTime = 0f;
@@ -29,12 +34,17 @@ namespace schmup {
 
         void Start()
         {
-            AudioManager.Instance?.RestartLevelMusic();
+            if (isLevel2)
+                AudioManager.Instance?.RestartLevel2Music();
+            else
+                AudioManager.Instance?.RestartLevelMusic();
         }
 
         void Update()
         {
             if (allWavesDone) return;
+
+            // Verhindert, dass nach Spielende (Tod/Sieg) noch neue Wellen oder der Boss spawnen
             if (GameManager.Instance != null && GameManager.Instance.IsGameEnded()) return;
 
             if (currentWave >= waves.Length)
