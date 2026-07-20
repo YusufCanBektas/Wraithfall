@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace schmup
 {
+    // Verwaltet die aktuelle Punktzahl und den dauerhaft gespeicherten Highscore.
+    // Bleibt als Singleton über Szenenwechsel (Level 1 -> Level 2) hinweg bestehen,
+    // damit der Punktestand über beide Level hinweg erhalten bleibt.
     public class ScoreManager : MonoBehaviour
     {
         public static ScoreManager Instance { get; private set; }
@@ -18,17 +21,17 @@ namespace schmup
                 return;
             }
             Instance = this;
-        }
-
-        void Start()
-        {
-            currentScore = 0;
+            DontDestroyOnLoad(gameObject);
         }
 
         public void AddPoints(int amount)
         {
             currentScore += amount;
-            Debug.Log($"Punkte: {currentScore}");
+        }
+
+        public void ResetScore()
+        {
+            currentScore = 0;
         }
 
         public int GetScore() => currentScore;
@@ -44,7 +47,6 @@ namespace schmup
             {
                 PlayerPrefs.SetInt(HighscoreKey, currentScore);
                 PlayerPrefs.Save();
-                Debug.Log($"Neuer Highscore: {currentScore}!");
                 return true;
             }
             return false;

@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace schmup
 {
+    // Standard-Gegner. Bewegt sich nach links (optional in einer Sinuswelle),
+    // schießt gelegentlich auf den Spieler und droppt beim Tod mit einer
+    // gewissen Wahrscheinlichkeit ein zufälliges Item.
     public class Enemy : Damageable
     {
         [Header("Bewegung")] [SerializeField] float moveSpeed = 3f;
@@ -16,7 +19,7 @@ namespace schmup
         [Header("Despawn")] [SerializeField] float despawnOffsetX = 15f;
 
         [Header("Item-Drop")]
-        [SerializeField] GameObject[] itemPrefabs; // z.B. Points, ExtraLife, Shield, WeaponUpgrade
+        [SerializeField] GameObject[] itemPrefabs; // Points, ExtraLife, Shield, WeaponUpgrade
         [SerializeField] float dropChance = 0.5f;
         bool itemDropsEnabled = true; // wird vom WaveSpawner gesetzt (ab welcher Welle Drops erlaubt sind)
 
@@ -40,14 +43,14 @@ namespace schmup
             // Bewegung nach links
             transform.position += Vector3.left * (moveSpeed * Time.deltaTime);
 
-            // Sinuswelle
+            // Optionale Sinuswelle für ein komplexeres Bewegungsmuster
             if (useSineWave)
             {
                 float newY = startY + Mathf.Sin(Time.time * sineFrequency) * sineAmplitude;
                 transform.position = new Vector3(transform.position.x, newY, transform.position.z);
             }
 
-            // Nur schießen wenn im Sichtbereich der Kamera
+            // Nur schießen, wenn im Sichtbereich der Kamera
             if (transform.position.x < Camera.main.transform.position.x + 12f)
             {
                 if (Time.time >= nextFireTime && bulletPrefab != null && firePoint != null)
@@ -57,20 +60,21 @@ namespace schmup
                 }
             }
 
-            // Aus dem Bild → zerstören (kameraabhängig)
+            // Außerhalb des Bildschirms (kameraabhängig) -> zerstören
             if (transform.position.x < Camera.main.transform.position.x - despawnOffsetX)
             {
                 Destroy(gameObject);
             }
         }
 
-        // Wird vom WaveSpawner direkt nach dem Instantiate aufgerufen
+        // Wird vom WaveSpawner direkt nach dem Instantiate aufgerufen, um Item-Drops
+        // erst ab einer bestimmten Welle zu erlauben
         public void SetItemDropsEnabled(bool enabled)
         {
             itemDropsEnabled = enabled;
         }
 
-        // Wird vom WaveSpawner gesetzt, um wellen-spezifisches Bewegungsmuster zu erlauben
+        // Wird vom WaveSpawner gesetzt, um wellen-spezifisches Bewegungsmuster zu übernehmen
         public void SetMovementPattern(bool sineWave, float speed)
         {
             useSineWave = sineWave;

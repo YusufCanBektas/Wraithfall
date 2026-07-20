@@ -1,6 +1,8 @@
 using UnityEngine;
 
 namespace schmup {
+    // Lässt die Kamera konstant nach rechts scrollen (klassisches Side-Scroller-Prinzip)
+    // und bewegt den zugewiesenen Hintergrund synchron mit.
     public class CameraController : MonoBehaviour
     {
         [SerializeField] float speed = 2f;
@@ -12,8 +14,8 @@ namespace schmup {
         {
             if (!_isScrolling) return;
             transform.position += Vector3.right * (speed * Time.deltaTime);
-            
-            // Background mitbewegen
+
+            // Background mitbewegen, damit er nicht hinter der Kamera zurückbleibt
             if (background != null)
                 background.position += Vector3.right * (speed * Time.deltaTime);
         }

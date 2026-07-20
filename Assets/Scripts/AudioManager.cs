@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace schmup
 {
+    // Zentrale Audio-Steuerung: Musik und Soundeffekte, bleibt über
+    // Szenenwechsel hinweg als Singleton bestehen. Lautstärke wird
+    // dauerhaft in PlayerPrefs gespeichert.
     public class AudioManager : MonoBehaviour
     {
         public static AudioManager Instance { get; private set; }

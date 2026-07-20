@@ -1,6 +1,8 @@
 using UnityEngine;
 
 namespace schmup {
+    // Steuert die Spieler-Bewegung innerhalb der Kamera-Grenzen sowie den
+    // Lean-Effekt (Schräglage des Schiffs je nach Bewegungsrichtung).
     public class PlayerController : MonoBehaviour {
 
         [SerializeField] float speed = 5f;
@@ -37,7 +39,8 @@ namespace schmup {
             Vector3 moveInput = new Vector3(input.Move.x, input.Move.y, 0f);
             _targetPosition += moveInput * (currentSpeed * Time.deltaTime);
 
-            // Camera Bounds
+            // Bewegung wird auf den Bereich um die Kamera herum begrenzt,
+            // damit der Spieler nicht aus dem sichtbaren Bild fliegen kann
             var minPlayerX = cameraTransform.position.x + minX;
             var maxPlayerX = cameraTransform.position.x + maxX;
             var minPlayerY = cameraTransform.position.y + minY;

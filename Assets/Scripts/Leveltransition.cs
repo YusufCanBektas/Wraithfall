@@ -4,6 +4,9 @@ using System.Collections;
 
 namespace schmup
 {
+    // Erzeugt den Übergang zwischen Level 1 und Level 2: Kamera-Zoom
+    // (Gefühl von "ins All fliegen"), Ausblenden zu Schwarz, Szenenwechsel
+    // und wieder Einblenden. Bleibt als Singleton über Szenen hinweg bestehen.
     public class LevelTransition : MonoBehaviour
     {
         public static LevelTransition Instance { get; private set; }
@@ -67,20 +70,19 @@ namespace schmup
 
             yield return new WaitForSeconds(holdDuration);
 
-            // Neue Szene laden und WIRKLICH warten, bis sie fertig geladen ist
+            // Neue Szene laden und wirklich warten, bis sie fertig geladen ist,
+            // statt nur einen Frame zu überspringen (sonst kann Camera.main noch null sein)
             AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName);
             while (!loadOp.isDone)
             {
                 yield return null;
             }
-            yield return null; // einen zusätzlichen Frame, damit Awake/Start der neuen Szene durchgelaufen sind
+            yield return null; // ein zusätzlicher Frame, damit Awake/Start der neuen Szene durchgelaufen sind
 
             // Kamera in der neuen Szene wieder finden und FOV zurücksetzen
             Camera newCamera = Camera.main;
             if (newCamera != null)
                 newCamera.fieldOfView = normalFieldOfView;
-            else
-                Debug.LogWarning("LevelTransition: Keine Main Camera in der neuen Szene gefunden, FOV konnte nicht zurückgesetzt werden.");
 
             // Wieder einblenden
             if (fadeCanvasGroup != null)

@@ -4,6 +4,8 @@ using TMPro;
 
 namespace schmup
 {
+    // Steuert Sieg/Niederlage: zeigt das passende Panel, verwaltet den
+    // Übergang zwischen den beiden Leveln und Retry/Zurück-zum-Menü.
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
@@ -33,21 +35,19 @@ namespace schmup
             if (gameEnded) return;
             gameEnded = true;
 
-            Debug.Log("Game Over!");
             Time.timeScale = 0f;
-
             ShowFinalScore(gameOverScoreText);
 
             if (gameOverPanel != null)
                 gameOverPanel.SetActive(true);
         }
 
+        // Wird beim ersten Boss (Level 1) aufgerufen - führt zum Übergang nach Level 2,
+        // statt das Spiel direkt zu beenden
         public void OnBossDefeated()
         {
             if (gameEnded) return;
             gameEnded = true;
-
-            Debug.Log("Erster Boss besiegt! Übergang zu Level 2...");
 
             if (LevelTransition.Instance != null)
                 LevelTransition.Instance.TransitionToScene("Level 2");
@@ -55,15 +55,13 @@ namespace schmup
                 SceneManager.LoadScene("Level 2"); // Fallback ohne Übergangseffekt
         }
 
-        // Wird vom zweiten Boss (Level 2) aufgerufen, um das eigentliche Spiel-Ende auszulösen
+        // Wird vom zweiten (finalen) Boss in Level 2 aufgerufen, um das eigentliche Spielende auszulösen
         public void OnFinalBossDefeated()
         {
             if (gameEnded) return;
             gameEnded = true;
 
-            Debug.Log("Sieg!");
             Time.timeScale = 0f;
-
             ShowFinalScore(winScoreText);
 
             if (winPanel != null)
@@ -89,12 +87,14 @@ namespace schmup
         public void RetryLevel()
         {
             Time.timeScale = 1f;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            ScoreManager.Instance?.ResetScore();
+            SceneManager.LoadScene("Level 1");
         }
 
         public void ReturnToMainMenu()
         {
             Time.timeScale = 1f;
+            ScoreManager.Instance?.ResetScore();
             SceneManager.LoadScene("MainMenu");
         }
 

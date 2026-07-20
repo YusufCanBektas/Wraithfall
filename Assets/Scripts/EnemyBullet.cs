@@ -1,6 +1,8 @@
 using UnityEngine;
 
 namespace schmup {
+    // Projektil der Standard-Gegner und des Bosses. Fliegt nach links
+    // und trifft den Spieler über PlayerHealth.OnTriggerEnter.
     public class EnemyBullet : MonoBehaviour
     {
         [SerializeField] float speed = 10f;

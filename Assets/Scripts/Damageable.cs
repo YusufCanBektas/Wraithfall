@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace schmup
 {
+    // Basisklasse für alles, was Schaden nehmen und sterben kann (Gegner, Boss).
+    // Enemy und BossController erben davon und überschreiben Die() für ihr
+    // jeweiliges spezifisches Verhalten (Item-Drop, Level-Ende, etc.).
     public abstract class Damageable : MonoBehaviour
     {
         [Header("Leben")]

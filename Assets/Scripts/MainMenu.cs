@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace schmup {
+    // Steuert das Hauptmenü: Spielstart, Optionen-Panel und Beenden.
     public class MainMenu : MonoBehaviour
     {
         [Header("Panels")]
@@ -16,6 +17,7 @@ namespace schmup {
         public void PlayGame()
         {
             AudioManager.Instance?.PlayButtonClick();
+            ScoreManager.Instance?.ResetScore();
             SceneManager.LoadScene("Level 1");
         }
 
@@ -40,7 +42,6 @@ namespace schmup {
         public void QuitGame()
         {
             AudioManager.Instance?.PlayButtonClick();
-            Debug.Log("Spiel wird beendet...");
 
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

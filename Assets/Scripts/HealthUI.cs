@@ -1,8 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace schmup
 {
+    // Steuert die Anzeige der Spieler-Leben als Reihe von Icons.
+    // Icon i ist sichtbar, solange currentHealth größer als sein Index ist.
     public class HealthUI : MonoBehaviour
     {
         [SerializeField] GameObject[] healthIcons; // in der Reihenfolge im Inspector zuweisen

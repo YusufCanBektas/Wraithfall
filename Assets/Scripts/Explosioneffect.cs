@@ -2,6 +2,8 @@ using UnityEngine;
 
 namespace schmup
 {
+    // Zerstört das Explosions-Partikelobjekt automatisch, sobald das
+    // Particle System fertig abgespielt hat.
     [RequireComponent(typeof(ParticleSystem))]
     public class ExplosionEffect : MonoBehaviour
     {

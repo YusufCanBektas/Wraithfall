@@ -1,6 +1,8 @@
 using UnityEngine;
 
 namespace schmup {
+    // Steuert das Schießen des Spielers, inklusive temporärem Waffen-Upgrade
+    // (kürzere Feuerrate für begrenzte Zeit).
     public class PlayerShooter : MonoBehaviour
     {
         [SerializeField] GameObject bulletPrefab;
@@ -40,11 +42,9 @@ namespace schmup {
         System.Collections.IEnumerator UpgradeRoutine()
         {
             upgraded = true;
-            Debug.Log("Waffen-Upgrade aktiviert!");
             powerUpIndicator?.ShowWeaponUpgrade(upgradeDuration);
             yield return new WaitForSeconds(upgradeDuration);
             upgraded = false;
-            Debug.Log("Waffen-Upgrade abgelaufen.");
         }
     }
 }

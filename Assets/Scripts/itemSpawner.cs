@@ -2,6 +2,8 @@ using UnityEngine;
 
 namespace schmup
 {
+    // Spawnt zusätzlich zu den Gegner-Drops in regelmäßigen Zeitabständen
+    // ein zufälliges Item, unabhängig davon ob gerade Gegner sterben.
     public class ItemSpawner : MonoBehaviour
     {
         [SerializeField] GameObject[] itemPrefabs;

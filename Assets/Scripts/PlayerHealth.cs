@@ -1,6 +1,8 @@
 using UnityEngine;
 
 namespace schmup {
+    // Verwaltet die Leben des Spielers, reagiert auf Treffer durch Gegner-Projektile
+    // oder Kollision mit Gegnern, und steuert das temporäre Schild-Power-Up.
     public class PlayerHealth : MonoBehaviour
     {
         [SerializeField] int maxHealth = 5;
@@ -20,16 +22,12 @@ namespace schmup {
 
         void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"Player getroffen von: {other.name} (Tag: {other.tag})");
-
-            // EnemyBullet trifft Spieler
             if (other.CompareTag("EnemyBullet"))
             {
                 TakeDamage(1);
                 Destroy(other.gameObject);
             }
 
-            // Gegner kollidiert mit Spieler
             if (other.CompareTag("Enemy"))
             {
                 TakeDamage(1);
@@ -38,21 +36,15 @@ namespace schmup {
 
         void TakeDamage(int damage)
         {
-            if (shieldActive)
-            {
-                Debug.Log("Schild blockiert Schaden!");
-                return;
-            }
+            // Solange das Schild aktiv ist, wird jeder Schaden ignoriert
+            if (shieldActive) return;
 
             currentHealth -= damage;
-            Debug.Log($"Leben: {currentHealth}");
-
             AudioManager.Instance?.PlayHit();
             healthUI?.UpdateDisplay(currentHealth);
 
             if (currentHealth <= 0)
             {
-                Debug.Log("Game Over!");
                 gameObject.SetActive(false);
                 GameManager.Instance?.OnPlayerDied();
             }
@@ -62,7 +54,6 @@ namespace schmup {
         {
             currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
             healthUI?.UpdateDisplay(currentHealth);
-            Debug.Log($"Extra-Leben! Leben: {currentHealth}");
         }
 
         public void ActivateShield()
@@ -74,11 +65,9 @@ namespace schmup {
         System.Collections.IEnumerator ShieldRoutine()
         {
             shieldActive = true;
-            Debug.Log("Schild aktiviert!");
             powerUpIndicator?.ShowShield(shieldDuration);
             yield return new WaitForSeconds(shieldDuration);
             shieldActive = false;
-            Debug.Log("Schild abgelaufen.");
         }
 
         public int GetHealth() => currentHealth;

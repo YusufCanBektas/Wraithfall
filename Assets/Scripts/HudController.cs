@@ -4,6 +4,8 @@ using TMPro;
 
 namespace schmup
 {
+    // Zentrale Steuerung für die Spiel-UI während eines Levels:
+    // Punkteanzeige, Wellenzähler und die Boss-Healthbar.
     public class HUDController : MonoBehaviour
     {
         [Header("Score")]

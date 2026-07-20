@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace schmup {
+    // Liest die Eingaben aus dem Unity Input System aus und stellt sie
+    // als einfache Properties für PlayerController und PlayerShooter bereit.
     [RequireComponent(typeof(PlayerInput))]
     public class InputReader : MonoBehaviour
     {

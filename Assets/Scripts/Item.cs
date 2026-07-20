@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace schmup
 {
+    // Die vier Sammel-Item-Typen: Punkte, Extra-Leben, Schild, Waffen-Upgrade
     public enum ItemType
     {
         Points,
@@ -11,6 +12,8 @@ namespace schmup
         WeaponUpgrade
     }
 
+    // Ein einsammelbares Item. Fliegt nach links, wird bei Spielernähe magnetisch
+    // angezogen und löst je nach Typ eine unterschiedliche Wirkung beim Einsammeln aus.
     public class Item : MonoBehaviour
     {
         [Header("Typ")]
@@ -34,6 +37,7 @@ namespace schmup
 
         void Start()
         {
+            // Item startet unsichtbar (Scale 0) und wächst über PopIn() auf seine Zielgröße
             targetScale = transform.localScale;
             transform.localScale = Vector3.zero;
             StartCoroutine(PopIn());
@@ -41,14 +45,7 @@ namespace schmup
 
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
-            {
                 player = playerObj.transform;
-                Debug.Log($"Item ({itemType}): Player gefunden - {playerObj.name}");
-            }
-            else
-            {
-                Debug.Log($"Item ({itemType}): KEIN Player mit Tag 'Player' gefunden!");
-            }
         }
 
         IEnumerator PopIn()
@@ -71,7 +68,7 @@ namespace schmup
                 float distance = Vector3.Distance(transform.position, player.position);
                 if (distance <= magnetRange)
                 {
-                    // Magnet-Effekt: Item wird zum Spieler gezogen
+                    // Magnet-Effekt: Item wird zum Spieler gezogen, sobald er nah genug ist
                     transform.position = Vector3.MoveTowards(transform.position, player.position, magnetSpeed * Time.deltaTime);
                     return;
                 }
@@ -83,7 +80,6 @@ namespace schmup
 
         void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"Item ({itemType}) OnTriggerEnter mit: {other.name} (Tag: {other.tag})");
             if (!other.CompareTag("Player")) return;
 
             switch (itemType)

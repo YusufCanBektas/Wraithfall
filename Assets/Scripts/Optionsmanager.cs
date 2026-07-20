@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace schmup {
+    // Verbindet den Lautstärke-Slider im Optionsmenü mit dem AudioManager.
     public class OptionsManager : MonoBehaviour
     {
         [Header("UI")]
