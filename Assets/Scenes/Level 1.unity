@@ -2568,6 +2568,7 @@ MonoBehaviour:
   holdDuration: 1
   fadeInDuration: 1
   mainCamera: {fileID: 330585545}
+  normalFieldOfView: 77
   zoomFieldOfView: 15
   zoomDuration: 1.5
 --- !u!4 &1136931830
@@ -4071,7 +4072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.3233032, y: -2.6699982}
+  m_AnchoredPosition: {x: 2.3233032, y: -2.6700134}
   m_SizeDelta: {x: 115.3533, y: 64.9888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1997648412

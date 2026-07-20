@@ -2477,6 +2477,7 @@ MonoBehaviour:
   holdDuration: 1
   fadeInDuration: 1
   mainCamera: {fileID: 330585545}
+  normalFieldOfView: 77
   zoomFieldOfView: 15
   zoomDuration: 1.5
 --- !u!4 &1136931830

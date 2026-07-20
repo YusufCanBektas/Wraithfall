@@ -16,6 +16,7 @@ namespace schmup
 
         [Header("Kamera-Zoom-Effekt")]
         [SerializeField] Camera mainCamera;
+        [SerializeField] float normalFieldOfView = 60f; // Standard-FOV, auf den nach dem Übergang zurückgesetzt wird
         [SerializeField] float zoomFieldOfView = 15f; // niedrigerer Wert = reinzoomen
         [SerializeField] float zoomDuration = 1.5f;
 
@@ -37,16 +38,15 @@ namespace schmup
 
         IEnumerator TransitionRoutine(string sceneName)
         {
-            float originalFOV = mainCamera != null ? mainCamera.fieldOfView : 60f;
-
             // Reinzoomen (Gefühl von "ins All fliegen")
             if (mainCamera != null)
             {
+                float startFOV = mainCamera.fieldOfView;
                 float elapsed = 0f;
                 while (elapsed < zoomDuration)
                 {
                     elapsed += Time.deltaTime;
-                    mainCamera.fieldOfView = Mathf.Lerp(originalFOV, zoomFieldOfView, elapsed / zoomDuration);
+                    mainCamera.fieldOfView = Mathf.Lerp(startFOV, zoomFieldOfView, elapsed / zoomDuration);
                     yield return null;
                 }
             }
@@ -67,14 +67,20 @@ namespace schmup
 
             yield return new WaitForSeconds(holdDuration);
 
-            // Neue Szene laden
-            SceneManager.LoadScene(sceneName);
-            yield return null; // einen Frame warten, bis die neue Szene aktiv ist
+            // Neue Szene laden und WIRKLICH warten, bis sie fertig geladen ist
+            AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName);
+            while (!loadOp.isDone)
+            {
+                yield return null;
+            }
+            yield return null; // einen zusätzlichen Frame, damit Awake/Start der neuen Szene durchgelaufen sind
 
             // Kamera in der neuen Szene wieder finden und FOV zurücksetzen
             Camera newCamera = Camera.main;
             if (newCamera != null)
-                newCamera.fieldOfView = originalFOV;
+                newCamera.fieldOfView = normalFieldOfView;
+            else
+                Debug.LogWarning("LevelTransition: Keine Main Camera in der neuen Szene gefunden, FOV konnte nicht zurückgesetzt werden.");
 
             // Wieder einblenden
             if (fadeCanvasGroup != null)
